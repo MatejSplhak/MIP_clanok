@@ -39,7 +39,7 @@ Tento článok sa koncentruje na priblíženie výpočtových modelov vizuálnej
 
 
 \section{Úvod}
-Je predpokladaná že v roku 2022 prehrávanie videí bude predstavovať 82\% celkovej premávky po IP adresách. Táto projekcia poukazuje na dôležitú potrebu vývoja nového spôsobu kompresie videa pretože aj malé vylepšenie pre rozšírený video encoder by znamenalo znamenitý pokles vo velkosti premávky videi. Niekoľko nových štandardov pre video encoding je práve v procese vývoja(napr. VVC a AVI). Aj keď adapcia týchto štandardov sľubuje lepšie výsledky, ich vývoj potrvá ešte niekoľko rokov. 
+Podľa Cisco  Visual  Networking  Index  Forecast [1] Je predpokladaná že v roku 2022 prehrávanie videí bude predstavovať 82\% celkovej premávky po IP adresách. Táto projekcia poukazuje na dôležitú potrebu vývoja nového spôsobu kompresie videa, pretože aj malé vylepšenie pre rozšírený video encoder, by znamenalo znamenitý pokles vo velkosti premávky videi. Niekoľko nových štandardov pre video encoding je práve v procese vývoja(napr. VVC a AVI). Aj keď adapcia týchto štandardov sľubuje lepšie výsledky, ich vývoj potrvá ešte niekoľko rokov hlavne z toho dôvodu, že sa musia zariadenia na sledovanie videi aktualizovať. Iný smer pohľadu na túto problematiku je vývoj nových encoderov, ktoré by boli kompatibilné zo širšou škálou štandardov. Zámer tejto práce je ten druhý spôsob, presnejšie, porovnávať dva typy encodingu založené na rôznych modeloch vizuálnej pozornosti. Prvý z nich je encoder založený na plne automatickom modely vizuálnej pozornosti ktorý používa mapy významnosti na rozloženie bitratu na rôzne miesta danej snímky podľa prepokladanej výnamnosti jednotlivych oblastí v danej snímke. Druhý encoder je založený na semi-automatickom modely vizualnej pozornosti ktorý zaznamenáva rôzne body fixácie zraku pozorovateľa na danej snímke. Tieto body fixácie neskôr prejdu postprocessingom, ktorý spresní ich pozíciu. Tento článok je rozdelený na viacero sekcíi. V prvej sekcií~\ref{1modely} sa bližšie vysvetlia modely vizuálnej pozornosti a taktiež mapy významnosti. V nasledujúcej sekcií~\ref{porovnanie} je samostatné porovnanie týchto typov encodingu. Výsledky tochto porovnania sú zaznamenané v sekcii~\ref{zaver}   
 
 
 Uveďte explicitne štruktúru článku. Tu je nejaký príklad.
@@ -47,7 +47,7 @@ Základný problém, ktorý bol naznačený v úvode, je podrobnejšie vysvetlen
 Dôležité súvislosti sú uvedené v častiach~\ref{dolezita} a~\ref{dolezitejsia}.
 Záverečné poznámky prináša časť~\ref{zaver}.
 
-
+\section{Modely vyzuálnej pozornosti} \label{1modely}
 
 \subsection{Top-down modely} \label{nejaka}
 
@@ -70,7 +70,7 @@ Základným problémom je teda\ldots{} Najprv sa pozrieme na nejaké vysvetlenie
 Môže sa zdať, že problém vlastne nejestvuje\cite{Coplien:MPD}, ale bolo dokázané, že to tak nie je~\cite{Czarnecki:Staged, Czarnecki:Progress}. Napriek tomu, aj dnes na webe narazíme na všelijaké pochybné názory\cite{PLP-Framework}. Dôležité veci možno \emph{zdôrazniť kurzívou}.
 
 
-\subsection{Nejaké vysvetlenie} \label{ina:nejake}
+\subsection{mapy významnosti} \label{ina:nejake}
 
 Niekedy treba uviesť zoznam:
 
@@ -95,14 +95,14 @@ Ten istý zoznam, len číslovaný:
 \end{enumerate}
 
 
-\subsection{Ešte nejaké vysvetlenie} \label{ina:este}
+\section{Automatický model vyzuálnej pozornosti} \label{auto}
 
 \paragraph{Veľmi dôležitá poznámka.}
 Niekedy je potrebné nadpisom označiť odsek. Text pokračuje hneď za nadpisom.
 
 
 
-\section{Sekciaazme} \label{dolezita}
+\section{Semi-automatický model vizuálnej pozornosti} \label{semi-auto}
 
 
 
