@@ -33,16 +33,16 @@ Podľa Cisco  Visual  Networking  Index  Forecast\cite{cisco:forecast}Je predpok
 \section{Modely vyzuálnej pozornosti} \label{1modely}
 Model ľudskej vizuálnej pozornosti je model, ktorý sa snaží napodobniť alebo predpovedať správanie ludskej vizuálnej pozornosti. Modely vizuálnej pozornosti sa rozvetvujú do viacerých smerov, z ktorých jeden sú výpočtové modely vizuálnej pozornosti. Výpočtový model vizuálnej pozornosti je model, ktorý zahrňuje nie len formálny opis toho ako vypočítava pozornosť ale aj môže byť testovaný tým, že sa mu predložia vstupy obrazov podobné tým, ktoré by boli predložené živému subjektu a následne sa sleduje ako presný bol predpokladaný výsledok. Tieto modely často používajú mapy významnosti.%dokonci
 \subsection{mapy významnosti} \label{ina:nejake}
-Podľa definície Christof Kocha a Shimon Ullmana z roku 1985, mapa významnosti je topografická mapa poskladaná z rôznych vizuálnych aspektov obrazu(farba, orientácia, pohyb atď) ktoré sú neskôr zvýraznené podľa ich predpokladanej významnosti. V podstate pozorujú ako moc je daný bod obrazu odlišný od jeho okolia. Koch a Ullman taktiež predpokladali, že región s najväčšou významnosťou je vhodným kandidátom pre ľudskú zrakovú pozornosť. Mapy významnosti sa hlavne používajú pri predpovedaní pohybu očí napr. na identifikovanie najdôležitejšej informácie pri vizuálnych vstupoch pre lepší výkon pri generovaní alebo prenášaní vizuálnych dát.
+Podľa definície Christof Kocha a Shimon Ullmana z roku 1985, mapa významnosti je topografická mapa poskladaná z rôznych vizuálnych aspektov obrazu(farba, orientácia, pohyb atď) ktoré sú neskôr zvýraznené podľa ich predpokladanej významnosti. V podstate pozorujú ako moc je daný bod obrazu odlišný od jeho okolia. Koch a Ullman taktiež predpokladali, že región s najväčšou významnosťou je vhodným kandidátom pre ľudskú zrakovú pozornosť. Mapy významnosti sa hlavne používajú pri predpovedaní pohybu očí napr. na identifikovanie najdôležitejšej informácie pri vizuálnych vstupoch pre lepší výkon pri generovaní alebo prenášaní vizuálnych dát.%pridat vypocet saliency map
 \begin{figure*}[tbh]
 \centering
 \includegraphics[scale=0.5]{saliency}
-\caption{Rozhodujúci argument.}
+\caption{Príklad mapy významnosti. Napravo je je vizuálny obraz a naľavo je jeho mapa významnosti.}
 \label{f:rozhod}
 \end{figure*}
+\subsection{Bottom-up modely} \label{ina}
+Modely, ktoré využívajú tieto mapy významnosti sú takzvané Bottom-up modely. Bottom-up modely predpokladajú že pozornosť je priťahovaná vlastnosťami obrazu. Auori\cite{bottom} aplikujú postprocessing na báze vzájomnosti pixelov kde podobné pixely zhlukujú do spoločných skupín. 
 \subsection{Top-down modely} \label{nejaka}
-
-\subsection{Bottom-down modely} \label{ina}
 
 \subsection{Video kompresia na základe významnosti}
 Hlavná idea video kompresie na základe významnosti je alokovanie bitov na regióny väčšej významnosti. Tieto regióny (region of interest ďalej ROI) sú potom encodované s vyššou kvalitou ako non-ROI.
