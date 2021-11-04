@@ -1,7 +1,5 @@
 % Metódy inžinierskej práce
-
 \documentclass[10pt,twoside,slovak,a4paper]{article}
-
 \usepackage[slovak]{babel}
 %\usepackage[T1]{fontenc}
 \usepackage[IL2]{fontenc} % lepšia sadzba písmena Ľ než v T1
@@ -9,62 +7,47 @@
 \usepackage{graphicx}
 \usepackage{url} % príkaz \url na formátovanie URL
 \usepackage{hyperref} % odkazy v texte budú aktívne (pri niektorých triedach dokumentov spôsobuje posun textu)
-\graphicspath{ {./images/} } 
 \usepackage{cite}
+\graphicspath{ {./images/} }
 %\usepackage{times}
-
 \pagestyle{headings}
-
 \title{Modely vizúalnej pozornosti a ich využitie pri formátovaní videa\thanks{Semestrálny projekt v predmete Metódy inžinierskej práce, ak. rok 2021/22, vedenie: Vladimír Mlynarovič}} % meno a priezvisko vyučujúceho na cvičeniach
-
 \author{Matej Šplhák\\[2pt]
 	{\small Slovenská technická univerzita v Bratislave}\\
 	{\small Fakulta informatiky a informačných technológií}\\
 	{\small \texttt{...@stuba.sk}}
 	}
-
 \date{\small 25. Október 2021} % upravte
-
-
-
 \begin{document}
-
 \maketitle
-
 \begin{abstract}
 Tento článok sa koncentruje na priblíženie výpočtových modelov vizuálnej pozornosti a ich využitie pri video kopresii. V tejeto oblasti existuje viacero navrhovaných modelov no táto práca sa sústredi na hlavné dva: Automatické modely vizualnej pozornosti, ktoré sa snažia pomocou deep learningu adaptívne kompresovať časti obrazu videa podľa ich predpokladanej významnosti a Semi-automatické modely vizuálnej pozornosti, ktoré  si vyžadujú sledovať pohyby zraku jedného pozorovateľa a postprocessing na báze časovej konzistencie. 
 \ldots
 \end{abstract}
 
 
-
 \section{Úvod}
-Podľa Cisco  Visual  Networking  Index  Forecast [4] Je predpokladaná že v roku 2022 prehrávanie videí bude predstavovať 82\% celkovej premávky po IP adresách. Táto projekcia poukazuje na dôležitú potrebu vývoja nového spôsobu kompresie videa, pretože aj malé vylepšenie pre rozšírený video encoder, by znamenalo znamenitý pokles vo velkosti premávky videi. Niekoľko nových štandardov pre video encoding je práve v procese vývoja(napr. VVC a AVI). Aj keď adapcia týchto štandardov sľubuje lepšie výsledky, ich vývoj potrvá ešte niekoľko rokov hlavne z toho dôvodu, že sa musia zariadenia na sledovanie videi aktualizovať. Iný smer pohľadu na túto problematiku je vývoj nových encoderov, ktoré by boli kompatibilné zo širšou škálou štandardov. Zámer tejto práce je ten druhý spôsob, presnejšie, porovnávať dva typy encodingu založené na rôznych modeloch vizuálnej pozornosti. Prvý z nich[1] je encoder založený na plne automatickom modely vizuálnej pozornosti ktorý používa mapy významnosti na rozloženie bitratu na rôzne miesta danej snímky podľa prepokladanej výnamnosti jednotlivych oblastí v danej snímke. Druhý encoder[2] je založený na semi-automatickom modely vizualnej pozornosti ktorý zaznamenáva rôzne body fixácie zraku pozorovateľa na danej snímke. Tieto body fixácie neskôr prejdu postprocessingom, ktorý spresní ich pozíciu. Tento článok je rozdelený na viacero sekcíi. V prvej sekcií~\ref{1modely} sa bližšie vysvetlia modely vizuálnej pozornosti a taktiež mapy významnosti. V nasledujúcej sekcií~\ref{porovnanie} je samostatné porovnanie týchto typov encodingu. Výsledky tochto porovnania sú zaznamenané v sekcii~\ref{zaver}   
+Podľa Cisco  Visual  Networking  Index  Forecast\cite{cisco:forecast}Je predpokladaná že v roku 2022 prehrávanie videí bude predstavovať 82\% celkovej premávky po IP adresách. Táto projekcia poukazuje na dôležitú potrebu vývoja nového spôsobu kompresie videa, pretože aj malé vylepšenie pre rozšírený video encoder, by znamenalo znamenitý pokles vo velkosti premávky videi. Niekoľko nových štandardov pre video encoding je práve v procese vývoja(napr. VVC a AVI). Aj keď adapcia týchto štandardov sľubuje lepšie výsledky, ich vývoj potrvá ešte niekoľko rokov hlavne z toho dôvodu, že sa musia zariadenia na sledovanie videi aktualizovať. Iný smer pohľadu na túto problematiku je vývoj nových encoderov, ktoré by boli kompatibilné zo širšou škálou štandardov. Zámer tejto práce je ten druhý spôsob, presnejšie, porovnávať dva typy encodingu založené na rôznych modeloch vizuálnej pozornosti. Prvý z nich\cite{Czarnecki:Progress} je encoder založený na plne automatickom modely vizuálnej pozornosti ktorý používa mapy významnosti na rozloženie bitratu na rôzne miesta danej snímky podľa prepokladanej výnamnosti jednotlivych oblastí v danej snímke. Druhý encoder\cite{Coplien:MPD} je založený na semi-automatickom modely vizualnej pozornosti ktorý zaznamenáva rôzne body fixácie zraku pozorovateľa na danej snímke. Tieto body fixácie neskôr prejdu postprocessingom, ktorý spresní ich pozíciu. Tento článok je rozdelený na viacero sekcíi. V prvej sekcií~\ref{1modely} sa bližšie vysvetlia modely vizuálnej pozornosti a taktiež mapy významnosti. V nasledujúcej sekcií~\ref{porovnanie} je samostatné porovnanie týchto typov encodingu. Výsledky tochto porovnania sú zaznamenané v sekcii~\ref{zaver}   
 
 
 \section{Modely vyzuálnej pozornosti} \label{1modely}
-
-Model ľudskej vizuálnej pozornosti je model, ktorý sa snaží napodobniť alebo predpovedať správanie ludskej vizuálnej pozornosti. Tieto modely často používajú mapy významnosti.%dokoncit
-
-\subsection{mapy významnosti} \label{mapy}
+Model ľudskej vizuálnej pozornosti je model, ktorý sa snaží napodobniť alebo predpovedať správanie ludskej vizuálnej pozornosti. Modely vizuálnej pozornosti sa rozvetvujú do viacerých smerov, z ktorých jeden sú výpočtové modely vizuálnej pozornosti. Výpočtový model vizuálnej pozornosti je model, ktorý zahrňuje nie len formálny opis toho ako vypočítava pozornosť ale aj môže byť testovaný tým, že sa mu predložia vstupy obrazov podobné tým, ktoré by boli predložené živému subjektu a následne sa sleduje ako presný bol predpokladaný výsledok. Tieto modely často používajú mapy významnosti.%dokonci
+\subsection{mapy významnosti} \label{ina:nejake}
 Podľa definície Christof Kocha a Shimon Ullmana z roku 1985, mapa významnosti je topografická mapa poskladaná z rôznych vizuálnych aspektov obrazu(farba, orientácia, pohyb atď) ktoré sú neskôr zvýraznené podľa ich predpokladanej významnosti. V podstate pozorujú ako moc je daný bod obrazu odlišný od jeho okolia. Koch a Ullman taktiež predpokladali, že región s najväčšou významnosťou je vhodným kandidátom pre ľudskú zrakovú pozornosť. Mapy významnosti sa hlavne používajú pri predpovedaní pohybu očí napr. na identifikovanie najdôležitejšej informácie pri vizuálnych vstupoch pre lepší výkon pri generovaní alebo prenášaní vizuálnych dát.
-
 \begin{figure*}[tbh]
 \centering
 \includegraphics[scale=0.5]{saliency}
-\caption{vizuálny obraz vľavo a jeho mapa významnosti vpravo}
+\caption{Rozhodujúci argument.}
 \label{f:rozhod}
 \end{figure*}
+\subsection{Top-down modely} \label{nejaka}
 
+\subsection{Bottom-down modely} \label{ina}
 
-\subsection{Bottom-up modely} \label{bot}
-
-
-
-\subsection{Top-down modely} \label{top}
+\subsection{Video kompresia na základe významnosti}
+Hlavná idea video kompresie na základe významnosti je alokovanie bitov na regióny väčšej významnosti. Tieto regióny (region of interest ďalej ROI) sú potom encodované s vyššou kvalitou ako non-ROI.
 
 Niekedy treba uviesť zoznam:
-
 \begin{itemize}
 \item jedna vec
 \item druhá vec
@@ -73,9 +56,7 @@ Niekedy treba uviesť zoznam:
 	\item y
 	\end{itemize}
 \end{itemize}
-
 Ten istý zoznam, len číslovaný:
-
 \begin{enumerate}
 \item jedna vec
 \item druhá vec
@@ -84,34 +65,13 @@ Ten istý zoznam, len číslovaný:
 	\item y
 	\end{enumerate}
 \end{enumerate}
-
-\section{Porovnanie automatického a semi-automatického modelu vizuálnej pozornosti} \label{porovnanie}
-
-\subsection{Video kompresia na základe významnosti}
-Hlavná idea video kompresie na základe významnosti je alokovanie bitov na regióny väčšej významnosti. Tieto regióny ROI(region of interest) sú potom encodované s vyššou kvalitou ako non-ROI. 
-
+\section{Porovnanie automatického a semi-automatickéeho modelu vizuálnej pozornosti} \label{porovnanie}
 \subsection{Automatický model vyzuálnej pozornosti} \label{auto}
-
 \paragraph{Veľmi dôležitá poznámka.}
 Niekedy je potrebné nadpisom označiť odsek. Text pokračuje hneď za nadpisom.
-
-
-
 \subsection{Semi-automatický model vizuálnej pozornosti} \label{semi-auto}
-
-
-
-
-
-
-
-
 \section{Záver} \label{zaver} % prípadne iný variant názvu
-
-
-
 %\acknowledgement{Ak niekomu chcete poďakovať\ldots}
-
 \section{CollabComment} \label{comment}
 % týmto sa generuje zoznam literatúry z obsahu súboru literatura.bib podľa toho, na čo sa v článku odkazujete
 \bibliography{literatura}
