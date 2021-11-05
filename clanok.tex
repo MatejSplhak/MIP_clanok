@@ -41,11 +41,17 @@ Podľa definície Christof Kocha a Shimon Ullmana z roku 1985, mapa významnosti
 \label{f:rozhod}
 \end{figure*}
 \subsection{Bottom-up modely} \label{ina}
-Modely, ktoré využívajú tieto mapy významnosti sú takzvané Bottom-up modely. Bottom-up modely predpokladajú že pozornosť je priťahovaná vlastnosťami obrazu. Autori\cite{bottom} naviac aplikujú postprocessing na báze vzájomnosti pixelov kde podobné pixely zhlukujú do spoločných skupín. Výskumníci zrakovej psychologie ako Yarbus[1967], koch[2000] a Parkhurst[2002] taktiež ukázali, že zrakový systém je vysoko náchylný na rôzne črty obrazu ako napr. rohy, náhle zmeny farby a prudké pohyby. Autor\cite{saliency:vytvar} opisuje, že výroba modelu tohoto bottom-up procesu spočíva v tom, že sa vezme vstupný obraz, ktorý je následne rozdelený do troch pralélnych kanálov, jeden pre každú črtu obrazu: farba, intenzita a orientácia. Výsledky z týchto troch kanálov sú rozprestrené po modely a reorganizované do stred-obkolesujúceho rozmiestnenia. Nakoniec sa aktivita v každom kanáli normalizuje a lineárne aplikuje čím vytvára mapy významnosti.    
+Modely, ktoré využívajú tieto mapy významnosti sú takzvané Bottom-up modely. Bottom-up modely predpokladajú že pozornosť je priťahovaná vlastnosťami obrazu. Autori\cite{bottom} naviac aplikujú postprocessing na báze vzájomnosti pixelov kde podobné pixely zhlukujú do spoločných skupín. Výskumníci zrakovej psychologie ako Yarbus[1967], koch[2000] a Parkhurst[2002] taktiež ukázali, že zrakový systém je vysoko náchylný na rôzne črty obrazu ako napr. rohy, náhle zmeny farby a prudké pohyby. Autor\cite{saliency:vytvar} opisuje, že výroba modelu tohoto bottom-up procesu spočíva v tom, že sa vezme vstupný obraz, ktorý je následne rozdelený do troch pralélnych kanálov, jeden pre každú črtu obrazu: farba, intenzita a orientácia. Výsledky z týchto troch kanálov sú rozprestrené po modely a reorganizované do stred-obkolesujúceho rozmiestnenia. Nakoniec sa aktivita v každom kanáli normalizuje a lineárne aplikuje čím vytvára mapy významnosti.%pridat nevyhody    
 \subsection{Top-down modely} \label{nejaka}
-
+Top-down process je riadený kontrolným procesom, ktorý sústredí pozornosť ľudského pozorovateľa na jeden alebo viacej objektov, ktoré su relevantné k jeho cieľom pri sledovaní scény. Ako napríklad hľadať dopravné značenie, snažiť sa nájsť  protivníka vo videohre alebo počítať nejaké špecifické objekty v danej scéne. V tomto prípade objekty, ktoré by normálne priťahovali pozornosť sledovaťela môžu byť kompletne odignorované ak sú irelevantné k cieľu pozorovateľa. V roku 1967, ruský psychológ Yarbus zapísal body fixácie a sakády(sakády sú pohyby našich očí medzi dvoma bodami fixácie) rôznych pozorovateľov zatial ako sa pozerali na každodenné objekty a scény. V tomto experimente sa pýtali pozorovateľov na rôzne otázky ohľadom scény znázornenej v Ilia Jefimovič Repinovom  obraze "Nečakali". Výsledkom tohto boli významne rozdielne vzory sakád, prićom každá z nich poukazovala na tie objekty v obraze, ktoré obsahovali najviac informácií relevantných k odpovedi na otázku. Tento experiment je poukázaný na obrázku 2.
+\begin{figure*}[tbh]
+\centering
+\includegraphics[scale=0.5]{yarbus}
+\caption{%doplnit}
+\label{yarbus:sakady}
+\end{figure*}
 \subsection{Video kompresia na základe významnosti}
-Hlavná idea video kompresie na základe významnosti je alokovanie bitov na regióny väčšej významnosti. Tieto regióny (region of interest ďalej ROI) sú potom encodované s vyššou kvalitou ako non-ROI.
+Hlavná idea video kompresie na základe významnosti je alokovanie bitov na regióny väčšej významnosti. Tieto regióny (region of interest ďalej ROI) sú potom encodované s vyššou kvalitou ako non-ROI.%dokoncit
 
 Niekedy treba uviesť zoznam:
 \begin{itemize}
