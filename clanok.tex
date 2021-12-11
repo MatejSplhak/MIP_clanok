@@ -53,11 +53,11 @@ Top-down process je riadený kontrolným procesom, ktorý sústredí pozornosť 
 %\subsection{Video kompresia na základe významnosti}
 %Hlavná idea video kompresie na základe významnosti je alokovanie bitov na regióny väčšej významnosti. Tieto regióny (region of interest ďalej ROI) sú potom encodované s vyššou kvalitou ako non-ROI.%dokoncit
 
-\section{Porovnanie automatického a semi-automatickéeho modelu vizuálnej pozornosti} \label{porovnanie}
+\section{Porovnanie automatického a semiautomatickéeho modelu vizuálnej pozornosti} \label{porovnanie}
 V minulosti boli výsledky semiautomatického a automatického modelu neporovnateľné. Semiautomatický model dosahoval oveľa lepšie výsledky vďaka tomu, že používal dáta z eye trackingu ľudského pozorovateľa. Ale v posledných rokoch, vďaka vývoju technológie a hlavne deep learningum, automatický model dobieha výkonom semiautomatický.
 
 \subsection{Semi-automatický model vizuálnej pozornosti} \label{semi-auto}
-Väčšinu času, rozdelenie vizuálnej pozornosti je nejednotné, teda aspoň čo sa týka umeleckého obsahu. Toto rozdelenie poukazuje na fakt, že zaznamenávanie pohľadu len niekoľkých pozorovateľov dokáźe vygenerovať mapy významnosti, ktoré by sa podobali ideálnemu výsledku. Na obr. 4 možno vidieť tento výsledok. Každý bod je skóre podobnosti (bližšie vysvetlené v !!!!!!citácia) medzi mapou významnosti daného počtu pozorovateľov a mapami významnosti ostatných počtov pozorovateľov. Každý bod bol spriemerovaný z každého snímku a spomedzi piatich skupín pozorovateľov. Zároveň bolo v tom čase pravdou, že väčšina automatických modelov neukazovala lepšie výsledky ako základný, na stred zameraný model. Z čoho vyplýva, že nie sú porovnateľné s modelmi vytvorenými sledovaním pohybu očí a to ani pre jedného pozorovateľa. Vďaka tomuto výsledku navrhli tvorcovia\cite{Coplien:MPD} semiautomatický koncept(), ktorý používa body fixácie jedné pozorovateľa spolu s postprocessingom na báze časovej konzistencie pozornosti, t.j. objekty ktoré sú označené ako významné v jednej snímke, sú taktiež predpokladané za významné v susedných snímkach.
+Väčšinu času, rozdelenie vizuálnej pozornosti je nejednotné, teda aspoň čo sa týka umeleckého obsahu. Toto rozdelenie poukazuje na fakt, že zaznamenávanie pohľadu len niekoľkých pozorovateľov dokáźe vygenerovať mapy významnosti, ktoré by sa podobali ideálnemu výsledku. Na obr. 4 možno vidieť tento výsledok. Každý bod je skóre podobnosti (bližšie vysvetlené v !!!!!!citácia) medzi mapou významnosti daného počtu pozorovateľov a mapami významnosti ostatných počtov pozorovateľov. Každý bod bol spriemerovaný z každého snímku a spomedzi piatich skupín pozorovateľov. Zároveň bolo v tom čase pravdou, že väčšina automatických modelov neukazovala lepšie výsledky ako základný, na stred zameraný model. Z čoho vyplýva, že nie sú porovnateľné s modelmi vytvorenými sledovaním pohybu očí a to ani pre jedného pozorovateľa. Vďaka tomuto výsledku navrhli tvorcovia\cite{Coplien:MPD} semiautomatický koncept(), ktorý používa body fixácie jedného pozorovateľa spolu s postprocessingom na báze časovej konzistencie pozornosti, t.j. objekty ktoré sú označené ako významné v jednej snímke, sú taktiež predpokladané za významné v susedných snímkach.
 \subsubsection{Kompresia v semiautomatickom modeli}
 Na kompresiu si tvorcovia\cite{Coplien:MPD} vybrali H.264, pretože to je najrozšírenejší štandard na kompresiu videa a x264 pretože to je najpopulárnejší video encoder. Pri kompresii sú predpovedané mapy významnosti downscalenuté aby pasovali do rozmerov 16x16 macroblokovej mriežky. Ak  \(Q \in R^+\) je mapa hodnôt qvantizačného parametru(QP) macroblocku vybraných encoderom, a \(S : R^2\rightarrow [0;1]\) je downscalnutá mapa významnosti pre daný snímok tak nové hodnoty QP na makroblokoch môžu byť vypočitané nasledujúcou rovnicou:
 \[{Q}' = \max(Q - \psi \cdot (S - ES),0)\]
@@ -71,7 +71,7 @@ kde \( \phi\) je cieľový bitrate\\
 --qcomp 0 --pass 2 --bitrate \(\phi\)\\
 
 \subsection{Automatický model vyzuálnej pozornosti} \label{auto}
-%dokoncit
+Na rozdiel od semiautomatického modelu, automatický model nepoužíva ľudského pozorovateľa. Autori\cite{Czarnecki:Progress} navrhli automatický model, ktorý rozdeľuje bitrate podľa sekvencie významnostných máp každého snímku, ktoré su vkladané ako dodatočný vstup. 
 \section{Záver} \label{zaver} 
 %dokoncit
 \section{CollabComment} \label{comment}
