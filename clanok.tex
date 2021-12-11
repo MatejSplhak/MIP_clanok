@@ -72,8 +72,9 @@ kde \( \phi\) je cieľový bitrate\\
 
 \subsection{Automatický model vyzuálnej pozornosti} \label{auto}
 Na rozdiel od semiautomatického modelu, automatický model nepoužíva ľudského pozorovateľa. Autori\cite{Czarnecki:Progress} navrhli automatický model, ktorý rozdeľuje bitrate podľa sekvencie významnostných máp každého snímku, ktoré su vkladané ako dodatočný vstup. Na dosiahnutie takejto redistribúcie bitratu bolo potrebné pozmeniť vnútornú štruktúru encoderu: delta quantizéry macrobloku. Na predpovedanie zrakovej pozornosti využili najmodernejśie modely na predpovedanie významnosti. Autori\cite{Czarnecki:Progress} navrhli model, ktorý sa skladá z dvoch častí: modul na predpovedanie významnosti a modul na encodovanie. Model postupuje nasledovne: Najprv presunie video do modulu na predpovedanie významnosti, následne presunie vytvorené mapy významnosti aj s daným videom do encoding modulu, ktorý nakoniec vyprodukuje encodnutý bitstream. Keďže daný model je automatický jeho kvalita záleží od kvality modelu na vytváranie máp významnosti. Tvorcovia mali na výber z troch rôznych modelov: OM-CNN, ACL a SAM-ResNet. OM-CNN a ACL sú modely, ktoré boli vytvorené na predpovedanie významnosti vo videách a SAM-ResNet bol vytvorený na predpovedanie významnosti v snímkoch. SAM nie je schopný využiť pohybové vlastnosti obrazu ale zato veľmi silno využíva strukturálne vlastnosti snímku, pretože bol trénovaný na viac rozmanitej databáze obrazov. Narozdiel od SAM OM-CNN bol trénovaný na malej skupine videí. Z toho vyplýva, že statické modely vizuálnej pozornosti by mohli byť lepšie v zovšeobecňovaní a tým pádom by aj mohli vytvárať lepšie mapy významnosti pri videách s nezvyčajným alebo doposial nevideným obsahom. ACL kombinuje oba prístupy; jeho model na predpovedanie významnosti bol trénovaný aj na videách aj na snímkoch. V tabuľke~\ref{tab:mapy} je možné vidieť objektívne ohodnotenie týchto troch modelov spolu aj s troma základnými modelmi vizuálnej pozornosti.
-\begin{table}[]
-\caption{Tabuľka 1. objektívne porovnanie vybraných modelov a troch základných modelov na súbore dát SAVAM použitím troch metrík AUC-Judd (AUC-J), koeficient linearnej korelácie (CC) a metrika podobnosti (SIM). Výsledky zahrňujú modely ktoré prešli fine tuningom (FT) a taktiež ich výsledok po postprocessingu (PP)}
+\begin{table}[h]
+\caption{objektívne porovnanie vybraných modelov a troch základných modelov na súbore dát SAVAM použitím troch metrík AUC-Judd (AUC-J), koeficient linearnej korelácie (CC) a metrika podobnosti (SIM). Výsledky zahrňujú modely ktoré prešli fine tuningom (FT) a taktiež ich výsledok po postprocessingu (PP)}
+\\
 \label{tab:mapy}
 \begin{tabular}{llll}
 Model                  & AUC-J & CC    & SIM   \\
@@ -86,8 +87,9 @@ OM-CNN + FT + PP       & 0.790 & 0.557 & 0.563 \\
 Sred-zameraný model    & 0.751 & 0.469 & 0.503
 \end{tabular}
 \end{table}
+\\
 Ako možno vidieť v tabuľke verzia SAM-ResNet modelu ktorá prešla post processingom a fine-tuningom ukazovala lepšie výsledky ako model na báze jedného pozorovateľa, ktorý je základom pre semiautomatický model. Vďaka výsledkom tohto merania si autori\cite{Czarnecki:Progress} vybrali SAM-ResNet ako model na predpovedanie významnosti obrazu.
-\subsubsekcia{kompresia v automatickom modeli}
+\subsubsection{kompresia v automatickom modeli}
 Na kompresiu používajú autori\cite{Czarnecki:Progress} významnosti-vedomú modifikáciu x264 software encoderu ako ich encoding modul. Táto modifikovaná verzia vyberá delta kvantizéry makrobloku tak, že \(b\) percentá bitratu encodnu \(p\) percent z nevýznamných regiónov podľa vstupu z mapy významnosti. Parametre \(b\) a \(p\) su zadefinované používateľom. Na to aby dosiahli vyššie uvedené rozdelenie bitratu použili nasledovné pravidlo na aktualizovanie:
 \begin{figure*}[tbh]
 \centering
