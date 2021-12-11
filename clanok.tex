@@ -62,6 +62,13 @@ Väčšinu času, rozdelenie vizuálnej pozornosti je nejednotné, teda aspoň �
 Na kompresiu si tvorcovia\cite{Coplien:MPD} vybrali H.264, pretože to je najrozšírenejší štandard na kompresiu videa a x264 pretože to je najpopulárnejší video encoder. Pri kompresii sú predpovedané mapy významnosti downscalenuté aby pasovali do rozmerov 16x16 macroblokovej mriežky. Ak  \(Q \in R^+\) je mapa hodnôt qvantizačného parametru(QP) macroblocku vybraných encoderom, a \(S : R^2\rightarrow [0;1]\) je downscalnutá mapa významnosti pre daný snímok tak nové hodnoty QP na makroblokoch môžu byť vypočitané nasledujúcou rovnicou:
 \[{Q}' = \max(Q - \psi \cdot (S - ES),0)\]
 Týmto spôsobom redukujú hodnoty QP na makroblokoch obasuhujúcich významné regióny alebo naopak zväčšujú hodnoty QP na makroblokoch obsahujúcich nevýznamné regióny. Parameter \(\psi\) je zadaný používateľom a reguluje rozmiestnenie bitratu medzi významnými a nevýznamnými regiónmi: čím väčšia hodnota tým viac bitov pre významné regióny.
+Využitím tejto rovnice autori\cite{Coplien:MPD} navrhujú toto reťazové spracovanie:
+1. Spusti x264 s nasledujúcimi argumentami
+--qcomp 0 --pass1 --bitrate \phi,
+kde \phi je cieľový bitrate
+2. načítaj hodnoty QP z .mbtree súboru vytvoreného encoderom a uprav ich podľa vyššie uvedenej rovnice 
+3. Spusti x264 s nasledujúcimi argumentami
+--qcomp 0 --pass 2 --bitrate \phi
 
 \subsection{Automatický model vyzuálnej pozornosti} \label{auto}
 %dokoncit
